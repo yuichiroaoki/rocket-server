@@ -33,7 +33,7 @@ mod read_json;
 fn json() -> content::Json<&'static str> {
 
     // let u = read_json::read_user_from_file("data/sample.json").unwrap();
-    let u = read_json::read_user_from_file("test.json").unwrap();
+    let u = read_json::read_user_from_file("data/test.json").unwrap();
     println!("{:#?}", u);
 
     content::Json("{ 'status': 'ok' }")
@@ -54,18 +54,6 @@ fn wave(name: &str, age: u8) -> String {
     format!("👋 Hello, {} year old named {}!", age, name)
 }
 
-// Note: without the `..` in `opt..`, we'd need to pass `opt.emoji`, `opt.name`.
-//
-// Try visiting:
-//   http://127.0.0.1:8000/?emoji
-//   http://127.0.0.1:8000/?name=Rocketeer
-//   http://127.0.0.1:8000/?lang=ру
-//   http://127.0.0.1:8000/?lang=ру&emoji
-//   http://127.0.0.1:8000/?emoji&lang=en
-//   http://127.0.0.1:8000/?name=Rocketeer&lang=en
-//   http://127.0.0.1:8000/?emoji&name=Rocketeer
-//   http://127.0.0.1:8000/?name=Rocketeer&lang=en&emoji
-//   http://127.0.0.1:8000/?lang=ru&emoji&name=Rocketeer
 #[get("/?<lang>&<opt..>")]
 fn hello(lang: Option<Lang>, opt: Options<'_>) -> String {
     let mut greeting = String::new();

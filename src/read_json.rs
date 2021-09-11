@@ -11,6 +11,24 @@ pub struct User {
     location: String,
 }
 
+// pub struct Sample {
+//     success: bool,
+//     error: String,
+//     result: Pointers
+// }
+
+// pub struct Pointers {
+//     pointers: vec![Pointer]
+// }
+
+
+// pub struct Pointer { 
+//     elements: Vec<String>,
+//     description: String,
+//     markdown: String,
+// }
+
+
 pub fn read_user_from_file<P: AsRef<Path>>(path: P) -> Result<User, Box<dyn Error>> {
     // Open the file in read-only mode with buffer.
     let file = File::open(path)?;
