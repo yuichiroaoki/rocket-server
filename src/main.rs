@@ -1,5 +1,7 @@
 #[macro_use] extern crate rocket;
 
+use rocket::response::content;
+
 #[cfg(test)] mod tests;
 
 #[derive(FromFormField)]
@@ -22,6 +24,12 @@ struct Options<'r> {
 #[get("/world")]
 fn world() -> &'static str {
     "Hello, world!"
+}
+
+// json response
+#[get("/json")]
+fn json() -> content::Json<&'static str> {
+    content::Json("{ 'hi': 'world' }")
 }
 
 // Try visiting:
@@ -76,6 +84,6 @@ fn hello(lang: Option<Lang>, opt: Options<'_>) -> String {
 fn rocket() -> _ {
     rocket::build()
         .mount("/", routes![hello])
-        .mount("/hello", routes![world, mir])
+        .mount("/hello", routes![world, mir, json])
         .mount("/wave", routes![wave])
 }
