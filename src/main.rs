@@ -35,6 +35,7 @@ fn slither() -> Json<Value> {
 
     let u = read_json::read_json_from_file("data/sample.json").unwrap();
 
+    println!("{}", u["results"]["printers"][0]);
     Json(u)
 }
 
@@ -42,7 +43,7 @@ fn slither() -> Json<Value> {
 #[get("/json")]
 fn json() -> content::Json<Value> {
 
-    let u = read_json::read_json_from_file("data/sample.json").unwrap();
+    let u = read_json::read_json_from_file("data/test.json").unwrap();
     println!("{:#?}", u);
 
     content::Json(u)
