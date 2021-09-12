@@ -10,8 +10,22 @@ use rocket::serde::{Deserialize, json::Value};
 pub struct User {
     fingerprint: String,
     location: String,
+    age: u8,
+    name: String,
+    has_car: bool,
 }
 
+
+pub fn read_user_from_file<P: AsRef<Path>>(path: P) -> Result<User, Box<dyn Error>> {
+    // Open the file in read-only mode with buffer.
+    let file = File::open(path)?;
+    let reader = BufReader::new(file);
+
+    // Read the JSON contents of the file as an instance of `User`.
+    let u = serde_json::from_reader(reader)?;
+
+    Ok(u)
+}
 
 pub fn read_json_from_file<P: AsRef<Path>>(path: P) -> Result<Value, Box<dyn Error>> {
     // Open the file in read-only mode with buffer.
@@ -21,6 +35,5 @@ pub fn read_json_from_file<P: AsRef<Path>>(path: P) -> Result<Value, Box<dyn Err
     // Read the JSON contents of the file as an instance of `User`.
     let u = serde_json::from_reader(reader)?;
 
-    // Return the `User`.
     Ok(u)
 }
