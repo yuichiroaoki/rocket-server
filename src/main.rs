@@ -28,28 +28,24 @@ fn world() -> &'static str {
 
 mod read_json;
 
-// use rocket::serde::{Serialize, json::Json};
-// use serde_json::Value;
+use rocket::serde::json::{Json, Value};
 
-// #[get("/slither")]
-// fn slither() -> Json<&'static Value> {
+#[get("/slither")]
+fn slither() -> Json<Value> {
 
-//     let u = read_json::read_user_from_file("data/sample.json").unwrap();
-//     // let u = read_json::read_user_from_file("data/test.json").unwrap();
-//     println!("{:#?}", u);
+    let u = read_json::read_json_from_file("data/sample.json").unwrap();
 
-//     u
-// }
+    Json(u)
+}
 
 // json response
 #[get("/json")]
-fn json() -> content::Json<&'static str> {
+fn json() -> content::Json<Value> {
 
-    let u = read_json::read_user_from_file("data/sample.json").unwrap();
-    // let u = read_json::read_user_from_file("data/test.json").unwrap();
+    let u = read_json::read_json_from_file("data/sample.json").unwrap();
     println!("{:#?}", u);
 
-    content::Json("{ 'status': 'ok' }")
+    content::Json(u)
 }
 
 
@@ -93,6 +89,6 @@ fn hello(lang: Option<Lang>, opt: Options<'_>) -> String {
 fn rocket() -> _ {
     rocket::build()
         .mount("/", routes![hello])
-        .mount("/hello", routes![world, mir, json])
+        .mount("/hello", routes![world, mir, json, slither])
         .mount("/wave", routes![wave])
 }
