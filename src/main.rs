@@ -28,12 +28,25 @@ fn world() -> &'static str {
 
 mod read_json;
 
+// use rocket::serde::{Serialize, json::Json};
+// use serde_json::Value;
+
+// #[get("/slither")]
+// fn slither() -> Json<&'static Value> {
+
+//     let u = read_json::read_user_from_file("data/sample.json").unwrap();
+//     // let u = read_json::read_user_from_file("data/test.json").unwrap();
+//     println!("{:#?}", u);
+
+//     u
+// }
+
 // json response
 #[get("/json")]
 fn json() -> content::Json<&'static str> {
 
-    // let u = read_json::read_user_from_file("data/sample.json").unwrap();
-    let u = read_json::read_user_from_file("data/test.json").unwrap();
+    let u = read_json::read_user_from_file("data/sample.json").unwrap();
+    // let u = read_json::read_user_from_file("data/test.json").unwrap();
     println!("{:#?}", u);
 
     content::Json("{ 'status': 'ok' }")
