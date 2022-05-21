@@ -22,9 +22,12 @@ pub fn read_user_from_file<P: AsRef<Path>>(path: P) -> Result<User, Box<dyn Erro
     let reader = BufReader::new(file);
 
     // Read the JSON contents of the file as an instance of `User`.
-    let u = serde_json::from_reader(reader)?;
+    let user: User = serde_json::from_reader(reader)?;
+    if user.has_car {
+        println!("{}", user.name);
+    }
 
-    Ok(u)
+    Ok(user)
 }
 
 pub fn read_json_from_file<P: AsRef<Path>>(path: P) -> Result<Value, Box<dyn Error>> {
